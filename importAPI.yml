@@ -1,0 +1,27 @@
+parameters:
+- name: azureSubscription
+  type: string
+- name: resourceGroup
+  type: string
+- name: apiId
+  type: string
+- name: serviceName
+  type: string
+- name: path
+  type: string
+- name: displayName
+  type: string
+- name: specificationUrl
+  type: string
+- name: specificationFormat
+  type: string
+
+steps: 
+- task: AzureCLI@2
+  displayName: API Import
+  inputs: 
+    azureSubscription: ${{ parameters.azureSubscription }}
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az apim api import -g ${{ parameters.resourceGroup }} --api-id ${{ parameters.apiId }} --service-name ${{ parameters.serviceName }} --path ${{ parameters.path }} --display-name ${{ parameters.displayName }} --specification-url ${{ parameters.specificationUrl }} --specification-format ${{ parameters.specificationFormat }}
